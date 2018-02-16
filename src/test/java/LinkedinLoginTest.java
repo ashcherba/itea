@@ -31,7 +31,7 @@ public class LinkedinLoginTest {
         passField.sendKeys("12345");
         signInButton.click();
 
-        WebElement alertMessage = driver.findElement(By.xpath("//div[@id='global-alert-queuel']//strong[not(text()=\"\")]"));
+        WebElement alertMessage = driver.findElement(By.xpath("//div[@id='global-alert-queue']//strong[not(text()=\"\")]"));
         Assert.assertTrue(alertMessage.isDisplayed(), "Alert message is not displayed");
     }
 }
