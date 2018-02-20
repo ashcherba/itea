@@ -21,12 +21,15 @@ public class LinkedinLoginTest {
         signInButton.click();
 
         sleep(5000);
+        String currentLink = driver.getCurrentUrl();
+        Assert.assertEquals(currentLink, "https://www.linkedin.com/feed/");
+
         WebElement homePage = driver.findElement(By.xpath("//a[(@class='nav-item__link nav-item__link--underline js-nav-item-link active')]"));
         Assert.assertTrue(homePage.isEnabled(), "Invalid credentials");
         driver.quit();
     }
 
-    @Test
+/*    @Test
     public void successfulLoginTest2() throws InterruptedException {
         WebDriver driver = new FirefoxDriver();
         driver.get("https://www.linkedin.com/");
@@ -43,7 +46,7 @@ public class LinkedinLoginTest {
         Assert.assertEquals(currentLink, "https://www.linkedin.com/feed/");
         driver.quit();
     }
-
+*/
     @Test
     public void negativeLoginTest(){
         WebDriver driver = new FirefoxDriver();
