@@ -9,59 +9,60 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
 
 public class LinkedinSearchTest {
-        WebDriver driver;
+    WebDriver driver;
 
-        @BeforeTest
-        public void beforeTest() throws InterruptedException {
-            driver = new FirefoxDriver();
-            driver.get("https://www.linkedin.com");
-            LinkedinLoginPage loginPage = new LinkedinLoginPage(driver);
-            loginPage.loginAs("aashcherba@bigmir.net", "qwertyQ1");
+    @BeforeTest
+    public void beforeTest(){
+        driver = new FirefoxDriver();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.get("https://www.linkedin.com");
+    }
 
-            //search
-            sleep(5000);
-            WebElement inputField = driver.findElement(By.xpath("//nav[@id='extended-nav']//input"));
-            inputField.sendKeys("hr");
-            WebElement searchButton = driver.findElement(By.xpath("//button[@class='search-typeahead-v2__button typeahead-icon']"));
-            searchButton.click();
-            sleep(5000);
+    @AfterTest
+    public void afterTest() {
+        driver.close();
+    }
+
+    @Test
+    public void basicSearchTest() throws InterruptedException {
+        LinkedinLoginPage loginPage = new LinkedinLoginPage(driver);
+        loginPage.loginAs("aashcherba@bigmir.net", "qwertyQ1");
+        //search
+        sleep(10);
+        String searchTerm = "qa";
+        driver.findElement(By.xpath("//div[@class='nav-search-typeahead']//input")).sendKeys(searchTerm);
+        driver.findElement(By.xpath("//*[@type='search-icon']")).click();
+        sleep(10);
+        //[contains(@class,'search-result__occluded-item')]
+        List<WebElement> results = driver.findElements(By.xpath("//li[contains(@class,'search-result__occluded-item')]"));
+        //int currentResultsNumber = results.size();
+        //Assert.assertEquals(results.size(), 10, "Number of results is wrong");
+        sleep(10);
+        /*
+        for (int i = 1; i < results.size(); i++) {
+            ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", results.get(i));
+            sleep(50);
+            String cardTitle = driver.findElement(By.xpath("//li[contains(@class,'search-result__occluded-item')][+i+]//span[contains(@class, 'actor-name')]")).getText();
+            System.out.println(cardTitle);
+            //Assert.assertTrue(cardTitle.contains(searchTerm.toLowerCase()),"Search term "+searchTerm+" not found in cart number "+ Integer.toString(i));
         }
-
-        @AfterTest
-        public void afterTest() {
-            driver.close();
-        }
-
-        @Test
-        public void basicSearchTest() {
-            //verify that Total number of Search Results equals 10
-
-            List<WebElement> searchResults = driver.findElements(By.xpath("//ul[@class='search-results__list list-style-none']/li[not(ul)]"));
-            Assert.assertEquals(searchResults.size(), 10, "Search result doesn't contain 10 links");
-        }
-
-            @Test
-            public void basicSearchTest2() {
-                //verify that each search result link contains entered word
-
-                List<WebElement> titlesOfResults = driver.findElements(By.xpath("//span[@class='name actor-name']"));
-                for (WebElement element : titlesOfResults) {
-                    String title = element.getText().toLowerCase();
-                    Assert.assertTrue(title.contains("hr"), "Some results don't contain search term");
-                }
-            /*locators:
-            //ul/li/div/div/div/p[1]
-            //li[@class='search-result search-result__occluded-item ember-view']/div
-            //ul[@class='search-results__list list-style-none']/li'
-            input[@placeholder='Search']
-            *[@type='search-icon]
-            div[contains(@class,'search-result--person')]
-            //li/div//span[@class='name actor-name']
-            //ul[@class='search-results__list list-style-none']/li[count(ul)=0]
-             */
+        */
+        for(int j=0; j<10; j+=10) {
+            for (int i = 1; i <= results.size(); i++) {
+                JavascriptExecutor je = (JavascriptExecutor) driver;
+                WebElement element = driver.findElement(By.xpath("//li[contains(@class,'search-result__occluded-item')][" + i + "]//p[1]"));
+                je.executeScript("arguments[0].scrollIntoView(true);", element);
+                System.out.println(element.getText());
+                String cardTitle = element.getText().toLowerCase();
+                Assert.assertTrue(cardTitle.contains(searchTerm),"Search term "+searchTerm+" not found in cart number " + i);
+            }
         }
     }
+}
+//li[contains(@class,'search-result__occluded-item')][" + i + "]//p[1]
+//li[contains(@class,'search-result__occluded-item')][" + i + "]//span[contains(@class, 'actor-name')]
