@@ -40,18 +40,19 @@ public class LinkedinSearchTest {
         sleep(10);
         //[contains(@class,'search-result__occluded-item')]
         List<WebElement> results = driver.findElements(By.xpath("//li[contains(@class,'search-result__occluded-item')]"));
-        //int currentResultsNumber = results.size();
-        //Assert.assertEquals(results.size(), 10, "Number of results is wrong");
+        int currentResultsNumber = results.size();
+        Assert.assertEquals(results.size(), 10, "Number of results is wrong");
         sleep(10);
-        /*
-        for (int i = 1; i < results.size(); i++) {
-            ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", results.get(i));
-            sleep(50);
-            String cardTitle = driver.findElement(By.xpath("//li[contains(@class,'search-result__occluded-item')][+i+]//span[contains(@class, 'actor-name')]")).getText();
+
+        for (WebElement result: results){
+            ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", result);
+            String cardTitle = result.getText();
+            System.out.println("XXXX");
             System.out.println(cardTitle);
-            //Assert.assertTrue(cardTitle.contains(searchTerm.toLowerCase()),"Search term "+searchTerm+" not found in cart number "+ Integer.toString(i));
+            Assert.assertTrue(cardTitle.toLowerCase().contains(searchTerm),"SearchTerm "+searchTerm+" not found in card");
         }
-        */
+
+        /*
         for(int j=0; j<10; j+=10) {
             for (int i = 1; i <= results.size(); i++) {
                 JavascriptExecutor je = (JavascriptExecutor) driver;
@@ -59,9 +60,23 @@ public class LinkedinSearchTest {
                 je.executeScript("arguments[0].scrollIntoView(true);", element);
                 System.out.println(element.getText());
                 String cardTitle = element.getText().toLowerCase();
-                Assert.assertTrue(cardTitle.contains(searchTerm),"Search term "+searchTerm+" not found in cart number " + i);
+                Assert.assertTrue(cardTitle.contains(searchTerm),"Search term "+searchTerm+" not found in card number " + i);
             }
         }
+        /*
+        /* another ambodiment:
+        int [] numbers = new int[1];
+        for(int x : numbers) {
+            for (int i = 1; i <= results.size(); i++) {
+                JavascriptExecutor je = (JavascriptExecutor) driver;
+                WebElement element = driver.findElement(By.xpath("//li[contains(@class,'search-result__occluded-item')][" + i + "]//p[1]"));
+                je.executeScript("arguments[0].scrollIntoView(true);", element);
+                System.out.println(element.getText());
+                String cardTitle = element.getText().toLowerCase();
+                Assert.assertTrue(cardTitle.contains(searchTerm), "Search term " + searchTerm + " not found in cart number " + i);
+            }
+        }
+         */
     }
 }
 //li[contains(@class,'search-result__occluded-item')][" + i + "]//p[1]
