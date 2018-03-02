@@ -3,10 +3,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -16,14 +16,14 @@ import static java.lang.Thread.sleep;
 public class LinkedinSearchTest {
     WebDriver driver;
 
-    @BeforeTest
+    @BeforeMethod
     public void beforeTest(){
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("https://www.linkedin.com");
+        driver.get("https://www.linkedin.com/");
     }
 
-    @AfterTest
+    @AfterMethod
     public void afterTest() {
         driver.close();
     }
@@ -31,53 +31,31 @@ public class LinkedinSearchTest {
     @Test
     public void basicSearchTest() throws InterruptedException {
         LinkedinLoginPage loginPage = new LinkedinLoginPage(driver);
-        loginPage.loginAs("aashcherba@bigmir.net", "qwertyQ1");
-        //search
-        sleep(10);
-        String searchTerm = "qa";
-        driver.findElement(By.xpath("//div[@class='nav-search-typeahead']//input")).sendKeys(searchTerm);
-        driver.findElement(By.xpath("//*[@type='search-icon']")).click();
-        sleep(10);
-        //[contains(@class,'search-result__occluded-item')]
-        List<WebElement> results = driver.findElements(By.xpath("//li[contains(@class,'search-result__occluded-item')]"));
-        int currentResultsNumber = results.size();
-        Assert.assertEquals(results.size(), 10, "Number of results is wrong");
-        sleep(10);
+        loginPage.loginAs("iteatest@i.ua", "1q2w3e_4r5t");
 
-        for (WebElement result: results){
-            ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", result);
+        //search
+        String searchTerm = "hr";
+
+        driver.findElement(By.xpath("//input[@placeholder='Search']")).sendKeys(searchTerm);
+        driver.findElement(By.xpath("//*[@type='search-icon']")).click();
+        //[contains(@class,'search-result__occluded-item')]
+
+        sleep(3000);
+
+        List<WebElement> results = driver.findElements(By.xpath("//li[contains(@class,'search-result__occluded-item')]"));
+        //int currentResultsNumber = results.size();
+        Assert.assertEquals(results.size(), 10, "Number of results is wrong");
+
+        for (WebElement result : results) {
+            ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", result);
             String cardTitle = result.getText();
             System.out.println("XXXX");
             System.out.println(cardTitle);
-            Assert.assertTrue(cardTitle.toLowerCase().contains(searchTerm),"SearchTerm "+searchTerm+" not found in card");
+            Assert.assertTrue(cardTitle.toLowerCase().contains(searchTerm),
+                    "Searchterm "+searchTerm+ " not found in cart");
         }
 
-        /*
-        for(int j=0; j<10; j+=10) {
-            for (int i = 1; i <= results.size(); i++) {
-                JavascriptExecutor je = (JavascriptExecutor) driver;
-                WebElement element = driver.findElement(By.xpath("//li[contains(@class,'search-result__occluded-item')][" + i + "]//p[1]"));
-                je.executeScript("arguments[0].scrollIntoView(true);", element);
-                System.out.println(element.getText());
-                String cardTitle = element.getText().toLowerCase();
-                Assert.assertTrue(cardTitle.contains(searchTerm),"Search term "+searchTerm+" not found in card number " + i);
-            }
-        }
-        /*
-        /* another ambodiment:
-        int [] numbers = new int[1];
-        for(int x : numbers) {
-            for (int i = 1; i <= results.size(); i++) {
-                JavascriptExecutor je = (JavascriptExecutor) driver;
-                WebElement element = driver.findElement(By.xpath("//li[contains(@class,'search-result__occluded-item')][" + i + "]//p[1]"));
-                je.executeScript("arguments[0].scrollIntoView(true);", element);
-                System.out.println(element.getText());
-                String cardTitle = element.getText().toLowerCase();
-                Assert.assertTrue(cardTitle.contains(searchTerm), "Search term " + searchTerm + " not found in cart number " + i);
-            }
-        }
-         */
+
+
     }
 }
-//li[contains(@class,'search-result__occluded-item')][" + i + "]//p[1]
-//li[contains(@class,'search-result__occluded-item')][" + i + "]//span[contains(@class, 'actor-name')]
