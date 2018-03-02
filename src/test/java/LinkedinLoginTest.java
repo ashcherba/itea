@@ -5,6 +5,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import static java.lang.Thread.sleep;
+
 public class LinkedinLoginTest {
     WebDriver driver;
 
@@ -26,10 +28,10 @@ public class LinkedinLoginTest {
         String initialPageTitle = loginPage.getPageTitle();
         String initialPageUrl = loginPage.getPageUrl();
 
-        Assert.assertEquals(initialPageTitle, "LinkedIn: Log In or Sign Up",
+        Assert.assertEquals(initialPageTitle, "LinkedIn: Войти или зарегистрироваться",
                 "Login page title is wrong");
 
-        LinkedinBasePage homePage = loginPage.loginAs("iteatest@i.ua", "1q2w3e_4r5t");
+        LinkedinBasePage homePage = loginPage.loginAs("aashcherba@bigmir.net", "qwertyQ1");
         Assert.assertTrue(homePage.isSignedIn(), "User is not signed in");
 
         Assert.assertNotEquals(homePage.getPageTitle(), initialPageTitle,
@@ -39,21 +41,16 @@ public class LinkedinLoginTest {
     }
 
     @Test
-    public void negativeLoginTest() {
-        //WebElement emailField = driver.findElement(By.xpath("//*[@id='login-email']"));
-        WebElement emailField = driver.findElement(By.id("login-email"));
-        WebElement passwordField = driver.findElement(By.id("login-password"));
-        WebElement signInButton = driver.findElement(By.id("login-submit"));
+    public void negativeLoginTest(){
+        LinkedinLoginPage loginPage = new LinkedinLoginPage(driver);
+        loginPage.loginAs("aashcherba@bigmir.net");
+        WebElement initialPageAlert = loginPage.getPageAlert();
+        WebElement initialButton = loginPage.getButtonAppears();
 
-        emailField.sendKeys("test@ukr.net");
-        passwordField.sendKeys("12345");
-        signInButton.click();
-
-        WebElement alertMessage = driver.findElement(By.xpath("//div[@id='global-alert-queue']//strong[not(text()='')]"));
-        Assert.assertTrue(alertMessage.isDisplayed(), "Alert message is not displayed.");
-
-
+        Assert.assertTrue(initialButton.isDisplayed(), "Alert message is not displayed.");
+        Assert.assertTrue(initialPageAlert.isDisplayed(), "Alert message is not displayed.");
     }
+
 
 
 }
