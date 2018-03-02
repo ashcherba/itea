@@ -14,6 +14,7 @@ public class LinkedinBasePage {
     }
 
     private void initElements(){
+
         userIcon = driver.findElement(By.id("profile-nav-item"));
     }
 
@@ -31,7 +32,16 @@ public class LinkedinBasePage {
         return driver.getCurrentUrl();
     }
 
+    public WebElement getPageAlert() {
+        return driver.findElement(By.id("global-alert-queue"));
+    }
+
+    public WebElement getButtonAppears() {
+        return driver.findElement(By.xpath("//a[@class='nav-link highlight']"));
+    }
+
     public void waitUntilElementIsClickable (WebElement webElement){
+
         waitUntilElementIsClickable(webElement, 10);
     }
 
