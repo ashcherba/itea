@@ -29,5 +29,11 @@ public class LinkedinLoginPage extends LinkedinBasePage{
         return new LinkedinBasePage(driver);
     }
 
+    public LinkedinBasePage loginAs(String email){
+        loginAs(email, "1234");
+        return new LinkedinLoginPage(driver);
+    }
+
+
 
 }
