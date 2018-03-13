@@ -1,7 +1,6 @@
 package test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -9,6 +8,8 @@ import org.testng.annotations.Test;
 import page.LinkedinHomePage;
 import page.LinkedinLandingPage;
 import page.LinkedinSearchResults;
+
+import java.util.concurrent.TimeUnit;
 
 public class LinkedinSearchTest {
     WebDriver driver;
@@ -19,6 +20,7 @@ public class LinkedinSearchTest {
     @BeforeMethod
     public void beforeTest(){
         driver = new FirefoxDriver();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("https://www.linkedin.com/");
         landingPage = new LinkedinLandingPage(driver);
         landingPage.loginAs("aashcherba@bigmir.net", "qwertyQ1");
