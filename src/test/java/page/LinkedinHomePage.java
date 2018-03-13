@@ -10,7 +10,7 @@ public class LinkedinHomePage extends LinkedinBasePage{
     @FindBy(id = "profile-nav-item")
     private WebElement userIcon;
 
-    @FindBy(xpath = "//input[@placeholder='Search']")
+    @FindBy(xpath = "//input[@placeholder='Поиск']")
     private WebElement searchField;
 
     @FindBy (xpath = "//*[@type='search-icon']")
