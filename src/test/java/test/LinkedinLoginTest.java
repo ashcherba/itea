@@ -1,11 +1,11 @@
 package test;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.*;
-import page.LinkedinBasePage;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import page.LinkedinHomePage;
 import page.LinkedinLandingPage;
 
@@ -45,14 +45,13 @@ public class LinkedinLoginTest {
     }
 
     @Test
-    public void negativeLoginTest(){
-        Assert.assertEquals(initialPageTitle, "LinkedIn: Войти или зарегистрироваться",
+    public void negativeLoginTest() {
+        Assert.assertEquals(initialPageTitle, "LinkedIn: Log In or Sign Up",
                 "Login page title is wrong");
 
-        LinkedinHomePage homePage = landingPage.loginAs("aashcherba@bigmir.net", "qwertyQ1");
-        Assert.assertFalse(homePage.isSignedIn(), "User is not signed in");
+        LinkedinHomePage homePage = landingPage.loginAs("iteatest@i.ua", "1q2w3e_4r5t");
+        Assert.assertFalse(homePage.isSignedIn(), "User is signed in");
     }
-
 
 
 }
