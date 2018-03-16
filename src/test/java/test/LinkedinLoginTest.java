@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import page.LinkedinHomePage;
 import page.LinkedinLandingPage;
+import page.LinkedinLoginPage;
 
 public class LinkedinLoginTest {
     WebDriver driver;
@@ -46,11 +47,11 @@ public class LinkedinLoginTest {
 
     @Test
     public void negativeLoginTest() {
-        Assert.assertEquals(initialPageTitle, "LinkedIn: Log In or Sign Up",
+        Assert.assertEquals(initialPageTitle, "LinkedIn: Войти или зарегистрироваться",
                 "Login page title is wrong");
 
-        LinkedinHomePage homePage = landingPage.loginAs("iteatest@i.ua", "1q2w3e_4r5t");
-        Assert.assertFalse(homePage.isSignedIn(), "User is signed in");
+        LinkedinLoginPage loginPage = landingPage.loginAs("aashcherba@bigmir.net", "1111");
+        Assert.assertNotEquals(loginPage.isAlertShown(), "User is signed in");
     }
 
 
