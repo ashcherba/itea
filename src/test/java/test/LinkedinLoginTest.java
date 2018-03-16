@@ -1,38 +1,20 @@
 package test;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import page.LinkedinHomePage;
 import page.LinkedinLandingPage;
 import page.LinkedinLoginPage;
 
-public class LinkedinLoginTest {
-    WebDriver driver;
-    LinkedinLandingPage landingPage;
+public class LinkedinLoginTest extends LinkedinBaseTest{
     String initialPageTitle;
     String initialPageUrl;
 
 
-    @BeforeMethod
-    public void beforeTest(){
-        driver = new FirefoxDriver();
-        driver.get("https://www.linkedin.com/");
-        landingPage = new LinkedinLandingPage(driver);
-        initialPageTitle = landingPage.getPageTitle();
-        initialPageUrl = landingPage.getPageUrl();
-    }
-
-    @AfterMethod
-    public void afterTest() {
-        driver.close();
-    }
-
     @Test
     public void successfulLoginTest() {
+        initialPageTitle = landingPage.getPageTitle();
+        initialPageUrl = landingPage.getPageUrl();
         Assert.assertEquals(initialPageTitle, "LinkedIn: Войти или зарегистрироваться",
                 "Login page title is wrong");
 
@@ -45,14 +27,46 @@ public class LinkedinLoginTest {
                 "Page url did not change after login");
     }
 
-    @Test
-    public void negativeLoginTest() {
+    @DataProvider
+    public Object[][] negativeTestCredentialsIsReturnedToLanding() {
+        return new Object[][]{
+                {"",""}};
+    }
+
+    @Test(dataProvider= "negativeTestCredentialsIsReturnedToLanding")
+    public void negativeTestCredentialsIsReturnedToLanding(String email, String password) {
+        initialPageTitle = landingPage.getPageTitle();
+        initialPageUrl = landingPage.getPageUrl();
         Assert.assertEquals(initialPageTitle, "LinkedIn: Войти или зарегистрироваться",
                 "Login page title is wrong");
+        //LinkedinLoginPage loginPage = landingPage.loginAs(email, password);
 
-        LinkedinLoginPage loginPage = landingPage.loginAs("aashcherba@bigmir.net", "1111");
-        Assert.assertNotEquals(loginPage.isAlertShown(), "User is signed in");
+        landingPage = landingPage.loginAs(email, password);
+        Assert.assertEquals(landingPage.getPageTitle(), initialPageTitle,
+                "User is signed in");
     }
 
 
+    @DataProvider
+    public Object[][] negativeTestCredentialsIsReturnedToLogin() {
+        return new Object[][]{
+                {"xcsg","dff", "Укажите действительный адрес эл. почты.", "Пароль должен содержать не менее 6 символов."}};
+    }
+
+    @Test(dataProvider= "negativeTestCredentialsIsReturnedToLogin")
+    public void negativeTestCredentialsIsReturnedToLogin(String email, String password, String emailMessage, String passMessage) {
+        initialPageTitle = landingPage.getPageTitle();
+        initialPageUrl = landingPage.getPageUrl();
+        Assert.assertEquals(initialPageTitle, "LinkedIn: Войти или зарегистрироваться",
+                "Login page title is wrong");
+        LinkedinLoginPage loginPage = landingPage.loginAs(email, password);
+        Assert.assertTrue(loginPage.isAlertShown(), "User is logged in");
+
+        String actualEmailMessage = loginPage.emailError();
+        String actualPassMessage = loginPage.passError();
+
+        Assert.assertEquals(actualEmailMessage, emailMessage, "actual and expected are different");
+        Assert.assertEquals(actualPassMessage, passMessage,  "actual and expected are different");
+
+    }
 }
