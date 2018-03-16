@@ -21,24 +21,20 @@ public class LinkedinLandingPage extends LinkedinBasePage{
         PageFactory.initElements(driver, this);
     }
 
-    public LinkedinHomePage loginAs(String email, String password) {
-        waitUntilElementIsClickable(emailField, 5);
-        emailField.sendKeys(email);
-        passwordField.sendKeys(password);
-        signInButton.click();
-        return PageFactory.initElements(driver, LinkedinHomePage.class);
-    }
-}
-    /*
+
     public <T> T loginAs(String email, String password){
         waitUntilElementIsClickable(emailField, 5);
         emailField.sendKeys(email);
         passwordField.sendKeys(password);
         signInButton.click();
-        if (signInButton.isDisplayed()) {
-            return (T) this;
+        if (getPageUrl().contains("/feed")) {
+            return (T) new LinkedinHomePage(driver);
+        }
+        if (getPageUrl().contains("/login-submit")) {
+            return (T) new LinkedinLoginPage(driver);
         }
         else {
-            return (T) PageFactory.initElements(driver, LinkedinHomePage.class);
+            return (T) this;
         }
-      */
+    }
+}
