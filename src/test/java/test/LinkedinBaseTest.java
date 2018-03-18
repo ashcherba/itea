@@ -9,13 +9,14 @@ import page.LinkedinLandingPage;
 public class LinkedinBaseTest {
     WebDriver driver;
     LinkedinLandingPage landingPage;
+    String initialPageTitle;
+    String initialPageUrl;
 
     @BeforeMethod
     public void beforeTest(){
         driver = new FirefoxDriver();
         driver.get("https://www.linkedin.com/");
         landingPage = new LinkedinLandingPage(driver);
-
     }
 
     @AfterMethod

@@ -3,22 +3,34 @@ package test;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import page.LinkedinHomePage;
-import page.LinkedinLandingPage;
 import page.LinkedinLoginPage;
 
+
 public class LinkedinLoginTest extends LinkedinBaseTest{
-    String initialPageTitle;
-    String initialPageUrl;
 
-
-    @Test
-    public void successfulLoginTest() {
+    @BeforeMethod
+    @Override
+    public void beforeTest() {
+        super.beforeTest();
         initialPageTitle = landingPage.getPageTitle();
         initialPageUrl = landingPage.getPageUrl();
+    }
+
+    @DataProvider
+    public Object[][] positiveLoginTest() {
+        return new Object[][]{
+                {"aashcherba@bigmir.net","qwertyQ1"},
+                {"aashcherba@bigmir.net ","qwertyQ1"},
+                {"AAShcherba@BIgmir.net","qwertyQ1"},
+                {"AASHCHERBA@BIGMIR.NET","qwertyQ1"}};
+    }
+
+    @Test (dataProvider= "positiveLoginTest")
+    public void successfulLoginTest(String email, String password) {
         Assert.assertEquals(initialPageTitle, "LinkedIn: Войти или зарегистрироваться",
                 "Login page title is wrong");
 
-        LinkedinHomePage homePage = landingPage.loginAs("aashcherba@bigmir.net", "qwertyQ1");
+        LinkedinHomePage homePage = landingPage.loginAs(email,password);
         Assert.assertTrue(homePage.isSignedIn(), "User is not signed in");
 
         Assert.assertNotEquals(homePage.getPageTitle(), initialPageTitle,
@@ -30,17 +42,15 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
     @DataProvider
     public Object[][] negativeTestCredentialsIsReturnedToLanding() {
         return new Object[][]{
-                {"",""}};
+                {"",""},
+                {"aashcherba@bigmir.net",""},
+                {"","qwertyQ1"}};
     }
 
     @Test(dataProvider= "negativeTestCredentialsIsReturnedToLanding")
     public void negativeTestCredentialsIsReturnedToLanding(String email, String password) {
-        initialPageTitle = landingPage.getPageTitle();
-        initialPageUrl = landingPage.getPageUrl();
         Assert.assertEquals(initialPageTitle, "LinkedIn: Войти или зарегистрироваться",
                 "Login page title is wrong");
-        //LinkedinLoginPage loginPage = landingPage.loginAs(email, password);
-
         landingPage = landingPage.loginAs(email, password);
         Assert.assertEquals(landingPage.getPageTitle(), initialPageTitle,
                 "User is signed in");
@@ -55,8 +65,6 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
 
     @Test(dataProvider= "negativeTestCredentialsIsReturnedToLogin")
     public void negativeTestCredentialsIsReturnedToLogin(String email, String password, String emailMessage, String passMessage) {
-        initialPageTitle = landingPage.getPageTitle();
-        initialPageUrl = landingPage.getPageUrl();
         Assert.assertEquals(initialPageTitle, "LinkedIn: Войти или зарегистрироваться",
                 "Login page title is wrong");
         LinkedinLoginPage loginPage = landingPage.loginAs(email, password);
