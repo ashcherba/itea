@@ -12,9 +12,7 @@ public class LinkedinBasePage {
         this.driver = driver;
     }
 
-    public String getPageTitle() {
-        return driver.getTitle();
-    }
+    public String getPageTitle() { return driver.getTitle(); }
 
     public String getPageUrl() {
         return driver.getCurrentUrl();
