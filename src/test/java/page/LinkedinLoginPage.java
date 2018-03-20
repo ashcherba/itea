@@ -36,14 +36,20 @@ public class LinkedinLoginPage extends LinkedinBasePage {
     }
 
     public String emailError(){
-        waitUntilElementIsClickable(errorOnEmail);
-        String errorMessageEmail = errorOnEmail.getText();
-        return errorMessageEmail;
+        try {
+            waitUntilElementIsClickable(errorOnEmail, 5);
+        } catch (Exception e){
+            System.out.println("There is no error message");
+        }
+        return errorOnEmail.getText();
     }
 
     public String passError(){
-        waitUntilElementIsClickable(errorOnPass);
-        String errorMessagePass = errorOnPass.getText();
-        return errorMessagePass;
+        try {
+            waitUntilElementIsClickable(errorOnPass, 5);
+        } catch (Exception e) {
+            System.out.println("There is no error message");
+        }
+        return errorOnPass.getText();
     }
 }
