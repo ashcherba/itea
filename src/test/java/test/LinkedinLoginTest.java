@@ -8,13 +8,6 @@ import page.LinkedinLoginPage;
 
 public class LinkedinLoginTest extends LinkedinBaseTest{
 
-    @BeforeMethod
-    @Override
-    public void beforeTest() {
-        super.beforeTest();
-        initialPageTitle = landingPage.getPageTitle();
-        initialPageUrl = landingPage.getPageUrl();
-    }
 
     @DataProvider
     public Object[][] positiveLoginTest() {
@@ -60,7 +53,10 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
     @DataProvider
     public Object[][] negativeTestCredentialsIsReturnedToLogin() {
         return new Object[][]{
-                {"xcsg","dff", "Укажите действительный адрес эл. почты.", "Пароль должен содержать не менее 6 символов."}};
+                {"xcsg","dff", "Укажите действительный адрес эл. почты.", "Пароль должен содержать не менее 6 символов."},
+                {"aashcherba@bigmir.net","dff", "", "Пароль должен содержать не менее 6 символов."},
+                {"aashcherba@bigmirggg.net","qwertyQ1", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", ""},
+                {"aashcherbabigmirfffff.net","qwertyQ1", "Укажите действительный адрес эл. почты.", ""}};
     }
 
     @Test(dataProvider= "negativeTestCredentialsIsReturnedToLogin")
