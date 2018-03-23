@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Login tests on firefox browser" verbose="1" >
+    <test name="Firefox browser" >
+        <parameter name="browserType" value ="Firefox"/>
+        <parameter name="envUrl" value ="https://ua.linkedin.com"/>
+
+        <classes>
+            <class name = "test.LinkedinLoginTest">
+            <methods>
+                <include name = "positiveLoginTest"/>
+            </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
