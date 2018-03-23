@@ -9,5 +9,4 @@
             <class name="test.LinkedinLoginTest" />
         </classes>
     </test>
-
 </suite>
