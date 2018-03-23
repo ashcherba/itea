@@ -35,18 +35,16 @@ public class LinkedinBaseTest {
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();
-                driver.get(envUrl);
                 break;
             case "chrome":
                 WebDriverManager.chromedriver().setup();
                 driver = new ChromeDriver();
-                driver.get(envUrl);
                 break;
             default:
                 System.out.println("Unsupported browser");
                 break;
         }
-        //driver.get("https://www.linkedin.com/");
+        driver.get(envUrl);
         landingPage = new LinkedinLandingPage(driver);
         initialPageTitle = landingPage.getPageTitle();
         initialPageUrl = landingPage.getPageUrl();
