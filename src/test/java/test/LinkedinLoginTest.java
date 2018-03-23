@@ -20,7 +20,7 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
 
     @Test (dataProvider= "positiveLoginTest")
     public void successfulLoginTest(String email, String password) {
-        Assert.assertEquals(initialPageTitle, "LinkedIn: Войти или зарегистрироваться",
+        Assert.assertEquals(initialPageTitle, "LinkedIn: Log In or Sign Up",
                 "Login page title is wrong");
 
         LinkedinHomePage homePage = landingPage.loginAs(email,password);
@@ -42,7 +42,7 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
 
     @Test(dataProvider= "negativeTestCredentialsIsReturnedToLanding")
     public void negativeTestCredentialsIsReturnedToLanding(String email, String password) {
-        Assert.assertEquals(initialPageTitle, "LinkedIn: Войти или зарегистрироваться",
+        Assert.assertEquals(initialPageTitle, "LinkedIn: Log In or Sign Up",
                 "Login page title is wrong");
         landingPage = landingPage.loginAs(email, password);
         Assert.assertEquals(landingPage.getPageTitle(), initialPageTitle,
@@ -61,7 +61,7 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
 
     @Test(dataProvider= "negativeTestCredentialsIsReturnedToLogin")
     public void negativeTestCredentialsIsReturnedToLogin(String email, String password, String emailMessage, String passMessage) {
-        Assert.assertEquals(initialPageTitle, "LinkedIn: Войти или зарегистрироваться",
+        Assert.assertEquals(initialPageTitle, "LinkedIn: Log In or Sign Up",
                 "Login page title is wrong");
         LinkedinLoginPage loginPage = landingPage.loginAs(email, password);
         Assert.assertTrue(loginPage.isAlertShown(), "User is logged in");
