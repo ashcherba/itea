@@ -8,7 +8,7 @@
         <classes>
             <class name = "test.LinkedinLoginTest">
             <methods>
-                <include name = "positiveLoginTest"/>
+                <include name = "successfulLoginTest"/>
             </methods>
             </class>
         </classes>
