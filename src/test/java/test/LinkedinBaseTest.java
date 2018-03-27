@@ -15,6 +15,7 @@ public class LinkedinBaseTest {
     LinkedinLandingPage landingPage;
     String initialPageTitle;
     String initialPageUrl;
+
     @Parameters({"browserType","envUrl"})
     @BeforeMethod
     public void beforeTest(@Optional("firefox")String browserType, @Optional("https://www.linkedin.com/") String envUrl){

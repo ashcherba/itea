@@ -25,7 +25,5 @@ public class LinkedinPasswordResetSubmitPage extends LinkedinBasePage{
             isLoaded = false;
         }
         return isLoaded;
-
-        //return resentButtonLink.isDisplayed();
     }
 }

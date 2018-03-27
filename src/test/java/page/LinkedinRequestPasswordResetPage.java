@@ -1,5 +1,6 @@
 package page;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,12 +19,19 @@ public class LinkedinRequestPasswordResetPage extends LinkedinBasePage {
     }
 
     public LinkedinPasswordResetSubmitPage submitEmail(String userEmail) {
-        userNameField.sendKeys("aashcherba@bigmir.net");
+        userNameField.sendKeys("aashcherba.qa@gmail.com");
         submitButton.click();
         return new LinkedinPasswordResetSubmitPage (driver);
     }
 
     public boolean isLoaded() {
-        return userNameField.isDisplayed();
+        boolean isLoaded;
+        try {
+            isLoaded = userNameField.isDisplayed();
+        }
+        catch (NoSuchElementException e){
+            isLoaded = false;
+        }
+        return isLoaded;
     }
 }
