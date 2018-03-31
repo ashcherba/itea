@@ -9,9 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Thread.sleep;
-
-public class LinkedinSearchPage extends LinkedinBasePage {
+public class LinkedinSearchPage extends LinkedinBasePage{
     @FindBy (xpath = "//li[contains(@class,'search-result__occluded-item')]")
     private List<WebElement> resultsWebElementList;
 
@@ -23,6 +21,10 @@ public class LinkedinSearchPage extends LinkedinBasePage {
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * Goes through all search results and add each card title to the list of search results
+     * @return the list of search results
+     */
     public List<String> getResults() {
         waitUntilElementIsVisible(resultsNumber);
         List<String> resultsStringList = new ArrayList();
@@ -34,5 +36,9 @@ public class LinkedinSearchPage extends LinkedinBasePage {
             //System.out.println(cardTitle);
         }
         return resultsStringList;
+    }
+    @Override
+    public boolean isLoaded() {
+        return false;
     }
 }

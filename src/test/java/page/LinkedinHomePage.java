@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import test.LinkedinSearchTest;
 
 
 public class LinkedinHomePage extends LinkedinBasePage{
@@ -22,11 +21,20 @@ public class LinkedinHomePage extends LinkedinBasePage{
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * verifies if user logged in successfully by checking the User Icon element
+     * @return true if User Icon appears on the web page
+     */
     public boolean isSignedIn() {
         waitUntilElementIsClickable(userIcon);
         return userIcon.isDisplayed();
     }
 
+    /**
+     * Searches for elements by entered specific search term
+     * @param searchTerm - text to search for
+     * @return page with search results
+     */
     public LinkedinSearchPage searchByTerm (String searchTerm) {
         waitUntilElementIsClickable(searchField);
         searchField.sendKeys(searchTerm);
@@ -34,4 +42,8 @@ public class LinkedinHomePage extends LinkedinBasePage{
         return new LinkedinSearchPage(driver);
     }
 
+    @Override
+    public boolean isLoaded() {
+        return false;
+    }
 }

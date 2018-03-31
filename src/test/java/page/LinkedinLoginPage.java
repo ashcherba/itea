@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LinkedinLoginPage extends LinkedinBasePage {
+public abstract class LinkedinLoginPage extends LinkedinBasePage {
 
         @FindBy(id = "session_key-login")
         private WebElement emailField;
@@ -30,11 +30,19 @@ public class LinkedinLoginPage extends LinkedinBasePage {
         PageFactory.initElements(driver,this);
     }
 
+    /**
+     * verifies if alert is displayed
+     * @return true if alert appears and false - if not
+     */
     public boolean isAlertShown(){
         waitUntilElementIsClickable(alertMessage);
         return alertMessage.isDisplayed();
     }
 
+    /**
+     * get text of the error message
+     * @return the text of the error about the invalid email address
+     */
     public String emailError(){
         try {
             waitUntilElementIsClickable(errorOnEmail, 5);
@@ -44,6 +52,10 @@ public class LinkedinLoginPage extends LinkedinBasePage {
         return errorOnEmail.getText();
     }
 
+    /**
+     * get text of the error message
+     * @return the text of the error about the invalid email passord
+     */
     public String passError(){
         try {
             waitUntilElementIsClickable(errorOnPass, 5);
@@ -52,4 +64,9 @@ public class LinkedinLoginPage extends LinkedinBasePage {
         }
         return errorOnPass.getText();
     }
+    @Override
+    public boolean isLoaded() {
+        return false;
+    }
+
 }
