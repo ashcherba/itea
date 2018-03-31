@@ -18,7 +18,8 @@ public class LinkedinBaseTest {
 
     @Parameters({"browserType","envUrl"})
     @BeforeMethod
-    public void beforeTest(@Optional("firefox")String browserType, @Optional("https://www.linkedin.com/") String envUrl){
+    public void beforeTest(@Optional("firefox")String browserType,
+                           @Optional("https://www.linkedin.com/") String envUrl){
 
         switch(browserType.toLowerCase()) {
             case "firefox":
@@ -35,7 +36,12 @@ public class LinkedinBaseTest {
         }
 
         driver.get(envUrl);
-        landingPage = new LinkedinLandingPage(driver);
+        landingPage = new LinkedinLandingPage(driver) {
+            @Override
+            public boolean isLoaded() {
+                return false;
+            }
+        };
         initialPageTitle = landingPage.getPageTitle();
         initialPageUrl = landingPage.getPageUrl();
     }

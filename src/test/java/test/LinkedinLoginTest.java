@@ -32,6 +32,10 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
                 "Page url did not change after login");
     }
 
+    /**
+     * Verifies that if at least one field is empty while log in - user stays on the same page
+     * @return the same page, Landing page
+     */
     @DataProvider
     public Object[][] negativeTestCredentialsIsReturnedToLanding() {
         return new Object[][]{
@@ -50,6 +54,10 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
     }
 
 
+    /**
+     * Verifies that if invalid credential(s) entered - user navigates to the Log In page and gets errors
+     * @return Log In page
+     */
     @DataProvider
     public Object[][] negativeTestCredentialsIsReturnedToLogin() {
         return new Object[][]{

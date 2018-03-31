@@ -13,7 +13,12 @@ public class LinkedinSearchTest extends LinkedinBaseTest {
     public void basicSearchTest(){
         String searchTerm = "hr";
 //page Factory:
-        LinkedinLandingPage loginPage = new LinkedinLandingPage(driver);
+        LinkedinLandingPage loginPage = new LinkedinLandingPage(driver) {
+            @Override
+            public boolean isLoaded() {
+                return false;
+            }
+        };
         LinkedinHomePage homePage = loginPage.loginAs("aashcherba@bigmir.net", "qwertyQ1");
         LinkedinSearchPage searchPage = homePage.searchByTerm(searchTerm);
         List<String> results = searchPage.getResults();
