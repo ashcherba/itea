@@ -16,6 +16,11 @@ public class LinkedinBaseTest {
     String initialPageTitle;
     String initialPageUrl;
 
+    /**
+     * Switch for using different browsers (Chrome, Firefox)
+     * @param browserType browser to be used for tests runs
+     * @param envUrl link to the test start page
+     */
     @Parameters({"browserType","envUrl"})
     @BeforeMethod
     public void beforeTest(@Optional("firefox")String browserType,
@@ -24,7 +29,7 @@ public class LinkedinBaseTest {
         switch(browserType.toLowerCase()) {
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
-                driver = new FirefoxDriver();
+              driver = new FirefoxDriver();
                 break;
             case "chrome":
                 WebDriverManager.chromedriver().setup();
