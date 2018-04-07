@@ -38,7 +38,7 @@ public abstract class LinkedinLandingPage extends LinkedinBasePage{
      * Log in to the system by entering credentials and clicking on SignIn button
      * @param email - email to enter
      * @param password - password to enter
-     * @param <T> - the type of the arguments for that method that not specified
+     * @param <T> - the type of the arguments for method that not specified
      *           (could be any non-primitive type)
      * @return nthe Home Page, LogIn Page or Landing Page
      * depending on URL address of the currently open web page
