@@ -17,9 +17,12 @@ public class LinkedinBaseTest {
     String initialPageUrl;
 
     /**
-     * Switch for using different browsers (Chrome, Firefox)
-     * @param browserType browser to be used for tests runs
-     * @param envUrl link to the test start page
+     * Chain of calls to run before each test method:
+     * 1.downloads the latest version of the WebDriver binary and exports the proper Java system variable
+     * 2.creates the driver object, depending on browser type
+     * 3.opens environment link
+     * 4. creates new object of the GoogleStartPage class
+     * @param browserType - the browser(Firefox, Chrome), used for test run
      */
     @Parameters({"browserType","envUrl"})
     @BeforeMethod

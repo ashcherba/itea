@@ -20,7 +20,7 @@ public class LinkedinCreateNewPasswordPage extends LinkedinBasePage{
 
     /**
      * Construct of the current page initialised web driver and page factory
-     * @param driver - initialised driver of the parents class
+     * @param driver - initialised driver from the parents class
      */
     public LinkedinCreateNewPasswordPage(WebDriver driver){
         super(driver);

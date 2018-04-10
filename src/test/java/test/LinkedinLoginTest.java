@@ -20,7 +20,7 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
 
     @Test (dataProvider= "positiveLoginTest")
     public void successfulLoginTest(String email, String password) {
-        Assert.assertEquals(initialPageTitle, "LinkedIn: Log In or Sign Up",
+        Assert.assertEquals(initialPageTitle, "LinkedIn: Log In or Sign Up]",
                 "Login page title is wrong");
 
         LinkedinHomePage homePage = landingPage.loginAs(email,password);

@@ -35,13 +35,11 @@ public abstract class LinkedinLandingPage extends LinkedinBasePage{
     }
 
     /**
-     * Log in to the system by entering credentials and clicking on SignIn button
-     * @param email - email to enter
-     * @param password - password to enter
-     * @param <T> - the type of the arguments for method that not specified
-     *           (could be any non-primitive type)
-     * @return nthe Home Page, LogIn Page or Landing Page
-     * depending on URL address of the currently open web page
+     * Login to the site using different credentials
+     * @param email - email, that has been used for login
+     * @param password - password, that has been used for login
+     * @param <T> - a generic type that is parameterized over types. Returns the page, depending on used credentials
+     * @return new object of the page, that is opened depending on used credentials
      */
     public <T> T loginAs(String email, String password){
         waitUntilElementIsClickable(emailField, 5);

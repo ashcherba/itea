@@ -16,6 +16,11 @@ public class LinkedinHomePage extends LinkedinBasePage{
     @FindBy (xpath = "//*[@type='search-icon']")
     private WebElement searchIcon;
 
+    /**
+     * Constructor of LinkedinHomePage class that takes WebDriver instance from LinkedinBasePage class
+     * and initialise LinkedinHomePage WebElements via PageFactory.
+     * @param driver - WebDriver instance that was initialised on BasePage
+     */
     public LinkedinHomePage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);

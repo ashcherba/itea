@@ -10,8 +10,9 @@ public abstract class LinkedinBasePage {
     WebDriver driver;
 
     /**
-     * The constructor in which the current page driver is announced
-     * @param driver - announced of the Web Driver on the current page
+     * Constructor of LinkedinBasePage class which takes Web Driver instance initialized in @BeforeMethod
+     * for reuse in LinkedinBasePage class methods
+     * @param driver - WebDriver instance
      */
     public LinkedinBasePage (WebDriver driver){
         this.driver = driver;
